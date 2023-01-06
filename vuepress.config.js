@@ -7,34 +7,28 @@ export default defineUserConfig({
   head: [['link', { rel: 'icon', href: 'https://user-images.githubusercontent.com/78744312/193326481-508c47c7-2456-49c0-89b8-f589cd35c3f7.png' }]],
   theme: defaultTheme({
     logo: 'https://user-images.githubusercontent.com/78744312/193326481-508c47c7-2456-49c0-89b8-f589cd35c3f7.png',
+    toggleSidebar: 'toggle',
     navbar: [
       {
-        text: 'Home',
-        link: '/',
+        text: 'github',
+        link: 'https://github.com/minhyeok0328',
       },
-      {
-        text: '개발',
-        link: '/dev/',
-      },
-      {
-        text: '노가리',
-        link: '/nogari/',
-      },
+      // {
+      //   text: '노가리',
+      //   link: '/nogari/',
+      // },
     ],
     sidebar: [
       {
-        text: '개발',
-        link: '/dev/'
-      },
-      {
-        text: '노가리',
+        text: 'javascript',
+        collapsible: true,
         children: [
           {
-            text: '첫 회사에서 퇴사를 하며..',
-            link: '/nogari/escape-from-si',
-          }
-        ]
+            text: '실행 컨텍스트',
+            link: '/js/execution-context',
+          },
+        ],
       },
-    ]
+    ],
   }),
 })
