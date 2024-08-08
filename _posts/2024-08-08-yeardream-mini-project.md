@@ -2,7 +2,7 @@
 title: "이어드림 스쿨 DE 미니 프로젝트 후기"
 date: 2024-08-08 12:00:00 +0900
 categories: [yeardream]
-tags: [kafka, pipeline]
+tags: [airflow, kafka, grafana, prometheus, spark, postgresql, elasticsearch, kibana]
 ---
 
 # 이어드림 스쿨 미니 프로젝트 후기
@@ -11,7 +11,7 @@ tags: [kafka, pipeline]
 
 # 프로젝트 주제
 
-![프로젝트 진행 프로세스](./images/<스크린샷 2024-08-05 135835.png>)
+![프로젝트 진행 프로세스](https://github.com/user-attachments/assets/c35f0151-d1ff-49d0-b914-1745aff0e8de)
 
 말 그대로 데이터 엔지니어링 프로젝트이다.
 
@@ -29,7 +29,7 @@ tags: [kafka, pipeline]
 
 [Steam Web API](https://partner.steamgames.com/doc/webapi)
 
-![steam web api list](./images/image.png)
+![steam web api list](https://github.com/user-attachments/assets/b5bdce58-6b1f-4434-a481-6252724eb550)
 
 여러가지의 api들이 있고 우리는 ISteamNews, ISteamUser* 등의 API 위주로 사용했다.
 
@@ -38,7 +38,7 @@ tags: [kafka, pipeline]
 
 # Data Pipeline Structure
 
-![데이터 파이프라인 구조](./images/image-1.png)
+![데이터 파이프라인 구조](https://github.com/user-attachments/assets/42350d87-48e4-4af0-99da-1dd91c8a7be8)
 
 데이터 파이프라인의 구조는 이렇다.
 
@@ -55,13 +55,13 @@ tags: [kafka, pipeline]
 
 우선 AWS EC2에서 구축했고, t2.xlarge 인스턴스 3개를 제공받았고 이 위에서 파이프라인을 구축했다.
 
-왜 이렇게 구성했는지 좀 천천히 살펴보자면
+왜 이렇게 구성했는지 살펴보자면
 
 ## Steam API를 Airflow를 통해 가져오자
 
 ### Airflow를 선택한 이유
 
-![Airflow 작동중인 화면](./images/image-2.png)
+![Airflow 작동중인 화면](https://github.com/user-attachments/assets/c8a7d65a-64cc-426b-a5f9-8386a5b9d334)
 
 실시간 데이터들은 없었다.
 그리고 가져와야 하는 데이터들의 주기도 각각 달랐다.
@@ -152,7 +152,7 @@ Kafka에 엄청나게 많은 데이터를 밀어넣었을 때 클러스터가 �
 1. 특정 시간(오후 3시 쯤)에 Airflow Dag를 전부 1분 단위로 바꾸고 실행한다.
 2. producer쪽 코드에 반복문을 건다.
    - API Call Limit가 있었기 때문에 API 쪽은 못했고, 대신에 producer쪽에 for문을 걸어서 부하 테스트를 진행했다.
-   - news 데이터는 content가 html 통째로 넘겨주기 때문에 데이터 양이 작지는 않아서 꽤 유의미 할 것이라고 생각했다.![kafka producer 관련 코드에 for문 추가](./images/image-3.png)
+   - news 데이터는 content가 html 통째로 넘겨주기 때문에 데이터 양이 작지는 않아서 꽤 유의미 할 것이라고 생각했다.![kafka producer 관련 코드에 for문 추가](https://github.com/user-attachments/assets/5226db4a-32e3-4a22-a9a9-8e859f6cef7b)
 3. 한 명 화면 공유 해서 다 같이 지켜본다.
 
 t2.xlarge(4 cores, 16GB RAM) 인스턴스 3개니까 총 12 cores 48GB 램인 것인데
@@ -168,7 +168,7 @@ t2.xlarge(4 cores, 16GB RAM) 인스턴스 3개니까 총 12 cores 48GB 램인 �
 
 ### 아 파티션 제대로 안 나눴다.
 
-![인스턴스 스토리지가 부족한 사진](./images/image-4.png)
+![인스턴스 스토리지가 부족한 사진](https://github.com/user-attachments/assets/0beb7f55-ffd9-4f76-8820-0a39b5768be3)
 여러 토픽들이 전부 특정 파티션에 몰려서 3개의 인스턴스 중 2번 인스턴스의 스토리지가 빠르게 차오르기 시작했다.
 
 순식간에 80GB를 채우고 쭉쭉 올라가고 있었다.
@@ -186,7 +186,7 @@ Airflow Dag job이 끝나기 전에 계속 실행돼서 심한건 job이 20개 �
 
 
 ### 결과
-![kafka 모니터링 중인 Grafana Dashboard 사진](./images/<스크린샷 2024-08-01 174331.png>)
+![kafka 모니터링 중인 Grafana Dashboard 사진](https://github.com/user-attachments/assets/bbcff7a8-a87a-4de0-b837-57fcae08b088)
 
 차트를 보면 중간에 뚝 끊긴 부분이 있다.
 
@@ -222,7 +222,7 @@ Airflow Dag job이 끝나기 전에 계속 실행돼서 심한건 job이 20개 �
 
 ## Spark를 굳이 써야 했을까..?
 
-![spark cluster webui](./images/<스크린샷 2024-07-26 095753.png>)
+![spark cluster webui](https://github.com/user-attachments/assets/fd2be724-80ce-4ee5-bb0b-7f2ca51565fc)
 
 Kafka에서 스트리밍 된 데이터를 전처리 하기 위해 Spark Cluster를 구축했다.
 
@@ -268,8 +268,7 @@ for game_name, game_id in GAMES.items():
 
 그렇기에 이 둘을 선택한 뒤 스팀에서 받아온 데이터 들을 Elastic Search에 저장했다.
 
-
-![Kibana Index Management Page 사진](./images/image-5.png)
+![Kibana Index Management Page 사진](https://github.com/user-attachments/assets/44dd63be-1fdc-44a5-9586-3d9b2ff91bfc)
 
 Kibana 시각화 사진은 준비하지 못했다.
 
