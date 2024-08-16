@@ -23,9 +23,15 @@ tags: [airflow, kafka, grafana, prometheus, spark, postgresql, elasticsearch, ki
 
 
 # 프로젝트 개요
+
+우선 팀 리더로써 아래와 같은 역할을 담당했다.
+- 전체 데이터 파이프라인 설계
+- 전반적으로 대부분의 개발에 기여하긴 했지만 주로 Spark, Kakfa, Airflow 쪽을 담당
+- 할 일을 정리하고 팀원들에게 역할 분배
+
+그리고 프로젝트 내용을 짧게 요약하자면 이렇다.
 > Steam Web API에서 게임 별 뉴스, 최근 플레이한 게임, 동시접속자 수 등의 데이터를 바탕으로 유의미한 데이터르 수집하는 파이프라인 구축 및 시각화
 
-프로젝트 내용을 요약하자면 이렇다.
 
 [Steam Web API](https://partner.steamgames.com/doc/webapi)
 
@@ -201,11 +207,11 @@ Airflow Dag job이 끝나기 전에 계속 실행돼서 심한건 job이 20개 �
    - 추후 다시 부하테스트 했을 때는 인스턴스 3개에 topic 데이터가 분산저장 되는 것을 확인할 수 있었다.
 2. 메모리 제한 추가
    - Elastic Search와 Kibana docker compose 파일에 적절히 메모리 제한 하는 환경변수를 설정해주었다.
-   - 나중아 알았는데 Spark도 제한 안 걸면 8GB 정도 쓰길래 Spark도 제한을 적절히 걸어주었다.
+   - 나중에 알았는데 Spark도 제한 안 걸면 8GB 정도 쓰길래 Spark도 제한을 적절히 걸어주었다.
 
 위와 같이 수정한 이후에는 부하테스트를 다시 진행해도 문제없이 데이터를 다 받아내었다. (야호) 
 
-그리고 dag에 for문을 걸어놔서 그런지 Airflow도 생각보다 cpu 자원을 많이 사용하는 것 같다.
+그리고 Dag에 for문을 걸어놔서 그런지 Airflow도 생각보다 cpu 자원을 많이 사용하는 것 같다.
 
 이번 프로젝트에서는 못 했지만, Airflow Dag가 엄청 많아지면 Kubernetes로 옮겨야 겠다는 생각도 해 보았다. 
 
